@@ -1,134 +1,195 @@
-# Block Graph
+# 🧩 NodeFlow — Interactive Block Graph Builder
 
-Live demo: https://block-graph-seven.vercel.app
+> A zero-dependency visual node editor built with React, TypeScript, and Tailwind CSS. Create, connect, and freely drag hierarchical block graphs on a canvas.
 
-GitHub: https://github.com/Ramjanict/Block-Graph
-
----
-
-## What is this
-
-**Block Graph** is a small interactive React app that lets you create draggable blocks and visually connect them to their parent. When the page loads a block appears at a random position. Each block has a `+` button — clicking it creates a child block (also placed randomly) and draws a dashed connector line from the parent to the child. Connectors update automatically when either block is dragged.
-
-This repo was built with React + Tailwind and uses a lightweight state-management approach to store blocks and relationships. No UI libraries other than Tailwind are used.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000?style=for-the-badge&logo=vercel)](https://block-graph-seven.vercel.app)
+[![GitHub](https://img.shields.io/badge/GitHub-Ramjanict-181717?style=for-the-badge&logo=github)](https://github.com/Ramjanict/Block-Graph)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
+[![Vite](https://img.shields.io/badge/Vite-4-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev)
 
 ---
 
-## Key features
+## ✨ Overview
 
-- A block appears at a random position when the page opens.
-- Each block has a `+` button that spawns a child block in a random position.
-- Blocks are draggable with the mouse.
-- Each child block draws a dashed line connecting to its parent block.
-- Lines follow blocks when parents or children are moved.
-- Built using React + Tailwind; any state-management library can be swapped in.
+**NodeFlow** is a lightweight, interactive canvas application that lets you build and visualize tree-structured node graphs directly in the browser. It starts with a single root block and lets you expand it into a full hierarchy — every child is connected to its parent via a live-updating dashed SVG connector line.
+
+Perfect as a foundation for **mind maps**, **workflow builders**, **dependency visualizers**, or **UI tree editors**.
 
 ---
 
-## Tech stack
+## 🚀 Live Demo
 
-- React (Vite / Create React App — depending on the starter code present in the repo)
-- Tailwind CSS
-- Plain JavaScript / TypeScript for drag & connector logic
-- Optional: small state library (Zustand / Redux / Context) — the project keeps state separate so you can switch easily.
+👉 **[https://block-graph-seven.vercel.app](https://block-graph-seven.vercel.app)**
 
 ---
 
-## Live preview
+## 🎯 Features
 
-Open the deployed demo: https://block-graph-seven.vercel.app
+| Feature | Details |
+|---|---|
+| **Spawn Blocks** | Click `+` on any block to add a child node at an auto-offset position |
+| **Drag & Drop** | Freely drag any block anywhere on the canvas via native mouse events |
+| **Live Connectors** | Dashed SVG polyline connectors update in real-time as blocks are moved |
+| **Hierarchical Layout** | Child blocks are offset horizontally and vertically from their parent |
+| **Zero Dependencies** | No external graph or drag-and-drop library — pure React + SVG |
+| **Full-Screen Canvas** | Full-viewport pink canvas with overflow clipping |
+| **TypeScript** | Fully typed components and state |
 
 ---
 
-## Quick start — run locally
+## 🛠️ Tech Stack
 
-> These commands assume you have Node.js >= 16 and npm or yarn installed.
+| Technology | Version | Purpose |
+|---|---|---|
+| [React](https://reactjs.org) | 18.x | UI rendering & component state |
+| [TypeScript](https://www.typescriptlang.org) | 5.x | Type safety |
+| [Vite](https://vitejs.dev) | 4.x | Dev server & build tool |
+| [Tailwind CSS](https://tailwindcss.com) | 3.x | Utility-first styling |
+| [ESLint](https://eslint.org) | 8.x | Code quality |
+
+---
+
+## 📁 Project Structure
+
+```
+Block-Graph/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── components/
+│   │   ├── Block.tsx           # Draggable block node with + spawn button
+│   │   ├── BlocksCanvas.tsx    # Main canvas — manages block state & layout
+│   │   └── ConnectionLines.tsx # SVG polyline connector between parent & child
+│   ├── App.tsx                 # Root component
+│   ├── main.tsx                # React entry point
+│   ├── index.css               # Global styles
+│   └── vite-env.d.ts
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+├── vite.config.ts
+└── vercel.json
+```
+
+---
+
+## ⚡ Getting Started
+
+> **Prerequisites:** Node.js >= 16, npm >= 8
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repository
 git clone https://github.com/Ramjanict/Block-Graph.git
 cd Block-Graph
 
 # 2. Install dependencies
 npm install
-# or
-# yarn
 
-# 3. Start dev server
+# 3. Start the development server
 npm run dev
-# or
-# npm run start
 ```
 
-Open `http://localhost:5173` (Vite) or `http://localhost:3000` depending on the project starter.
+Open **[http://localhost:5173](http://localhost:5173)** in your browser.
+
+### Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Lint all `.ts` / `.tsx` files |
 
 ---
 
-## Project structure (suggested)
+## 🏗️ Architecture
+
+### Component Responsibilities
 
 ```
-/src
-  /components
-    Block.jsx         # Single draggable block component
-    Connector.jsx     # SVG/Canvas component that draws dashed lines between nodes
-    Board.jsx         # Main area that renders all blocks and connectors
-  /store
-    useBlocks.js      # Centralized state for blocks & relationships (Zustand / Context)
-  utils
-    math.js           # helper functions (distance, angle, randomPosition)
-  App.jsx
-  main.jsx
-
-public
-  index.html
-
-README.md
-package.json
+BlocksCanvas (State Owner)
+├── Block[]            — renders each draggable node
+│     └── onAdd()      — spawns a child with offset position
+│     └── onDrag()     — updates x/y in canvas state
+└── ConnectionLine[]   — SVG polyline per parent-child relationship
+      └── startX/Y     — bottom-center of parent block
+      └── endX/Y       — top-center of child block
+      └── midY bezier  — creates orthogonal step connector
 ```
 
-> The exact filenames may differ from the starter code. The structure above describes the responsibilities of each area.
+### Block Data Shape
+
+```ts
+interface BlockType {
+  id: number;      // unique auto-incremented identifier
+  x: number;       // absolute left position (px)
+  y: number;       // absolute top position (px)
+  parentId?: number; // undefined for root block
+}
+```
+
+### Connector Geometry
+
+The `ConnectionLine` component draws an **orthogonal (step) polyline** using four points:
+
+```
+(startX, startY)  →  (startX, midY)  →  (endX, midY)  →  (endX, endY)
+     ↓                                                          ↑
+  parent bottom-center                                   child top-center
+```
 
 ---
 
-## Implementation notes / tips
+## 🔭 Roadmap / Ideas
 
-- **Block identity**: each block uses a unique id and stores `{ id, x, y, parentId }`.
-- **Random placement**: when spawning place the block within the board bounds (subtract block size) to avoid overflow.
-- **Dragging**: keep dragging logic in the `Block` component and update the central store with the new coordinates so connectors can re-render.
-- **Connector drawing**: use an SVG layer over the board (or under it) to draw `<line>` elements from parent center to child center. Update the `x1,y1,x2,y2` attributes from the store positions.
-- **Performance**: for many nodes consider debouncing updates or rendering connectors in a single SVG with a lightweight renderer.
-
----
-
-## Customization ideas / roadmap
-
-- Add a context-menu on blocks (rename, delete, reparent).
-- Allow dragging a block to another block to change parent.
-- Snap-to-grid option and alignment guides.
-- Persist layout (localStorage or backend) and load saved graphs.
-- Add zoom & pan for large graphs.
+- [ ] Delete blocks (with cascade removal of children)
+- [ ] Rename blocks inline
+- [ ] Drag-to-reparent between blocks
+- [ ] Snap-to-grid & alignment guides
+- [ ] Zoom & pan (canvas transform)
+- [ ] Persist layout to `localStorage` or a backend
+- [ ] Export graph as JSON or PNG
+- [ ] Curved bezier connectors (toggle with orthogonal)
+- [ ] Undo / redo history
 
 ---
 
-## Troubleshooting
+## 🐞 Known Issues & Tips
 
-- If blocks sometimes spawn off-screen, adjust the random position bounds to account for the block width/height and board padding.
-- If connectors lag while dragging, try updating positions at animation frame frequency using `requestAnimationFrame`.
-
----
-
-## Contributing
-
-Contributions are welcome. Open an issue or a PR with a clear description of the change. If you want to extend state-management, add tests, or improve performance, please describe the approach in an issue first.
+- **Block spawns off-screen?** The random offset on child placement uses parent position + fixed offsets. Adjust `offsetX` / `offsetY` in `BlocksCanvas.tsx` for tighter layouts.
+- **Connector lag during fast drag?** Wrap the state update in `requestAnimationFrame` for smoother re-renders on high-node-count graphs.
 
 ---
 
-## License
+## 🤝 Contributing
 
-This project is released under the MIT License. See the `LICENSE` file for details.
+Contributions, issues, and feature requests are welcome!
+
+1. Fork the repo
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'feat: add my feature'`
+4. Push to the branch: `git push origin feature/my-feature`
+5. Open a Pull Request
+
+Please open an issue first for large changes to discuss the approach.
 
 ---
 
-## Author / Contact
+## 📄 License
 
-Md Ramjan — feel free to open issues or PRs on GitHub: https://github.com/Ramjanict/Block-Graph
+Released under the **MIT License** — see [`LICENSE`](LICENSE) for details.
+
+---
+
+## 👤 Author
+
+**Md Ramjan**
+- GitHub: [@Ramjanict](https://github.com/Ramjanict)
+- Project: [Block-Graph](https://github.com/Ramjanict/Block-Graph)
+
+---
+
+> **Tags:** `react` `typescript` `vite` `tailwindcss` `node-graph` `block-editor` `canvas` `drag-and-drop` `svg` `visual-programming` `mind-map` `workflow-builder` `tree-view` `interactive-ui` `frontend`
